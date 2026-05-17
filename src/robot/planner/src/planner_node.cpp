@@ -83,7 +83,7 @@ void PlannerNode::timerCallback() {
 
     nav_msgs::msg::Path empty_path;
     empty_path.header.stamp = this->get_clock()->now();
-    empty_path.header.frame_id = "map";
+    empty_path.header.frame_id = "sim_world";
     path_pub_->publish(empty_path);
     return;
   }
@@ -141,7 +141,7 @@ void PlannerNode::planPath() {
 
   nav_msgs::msg::Path path;
   path.header.stamp = this->get_clock()->now();
-  path.header.frame_id = "map";
+  path.header.frame_id = "sim_world";
 
   for (const CellIndex & cell : grid_path) {
     geometry_msgs::msg::PoseStamped pose = gridToPose(cell);
@@ -255,7 +255,7 @@ CellIndex PlannerNode::worldToGrid(double wx, double wy) const {
 geometry_msgs::msg::PoseStamped PlannerNode::gridToPose(const CellIndex & cell) const {
   geometry_msgs::msg::PoseStamped pose;
 
-  pose.header.frame_id = "map";
+  pose.header.frame_id = "sim_world";
 
   pose.pose.position.x =
     current_map_.info.origin.position.x +
